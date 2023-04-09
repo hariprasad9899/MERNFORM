@@ -1,0 +1,80 @@
+@import "../../Helper/styleHelper.scss";
+
+.book-entrance {
+    width: 90%;
+    margin: auto;
+    margin-top: 2rem;
+    color: white;
+
+    @include flexFiller(row, center, space-between, 0);
+    flex-wrap: wrap;
+
+    .add-book {
+        button {
+            width: 10rem;
+            padding: 0.5rem;
+            font-size: 1rem;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .search-book {
+        .input-box {
+            .search-text {
+                color: black;
+            }
+
+            @include flexFiller(row, center, center, 1rem);
+            flex-wrap: wrap;
+            button {
+                width: 10rem;
+                padding: 0.5rem;
+                font-size: 1rem;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            .search-input-box {
+                width: 10rem;
+                padding: 0.5rem;
+                border: none;
+                color: black;
+                font-size: 1rem;
+                background-color: whitesmoke;
+            }
+
+            .dropdown {
+                width: 10rem;
+                height: 2.4rem;
+                position: relative;
+                background-color: lightgray;
+                position: relative;
+                @include flexFiller(row, center, center, 0);
+                user-select: none;
+                .drop-content {
+                    position: absolute;
+                    z-index: 100;
+                    width: 100%;
+                    top: 2.5rem;
+                    height: 8rem;
+                    background-color: rgb(48, 48, 77);
+                    p:hover {
+                        cursor: pointer;
+                        background-color: rgb(21, 118, 89);
+                    }
+                }
+                .dropVisible {
+                    height: 0;
+                    p {
+                        display: none;
+                    }
+                }
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
