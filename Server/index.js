@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 mongoose.connect(
     // "mongodb+srv://hariprasadsoundararajan:kvf6KrNmcIdXOxPX@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority"
-   "mongodb+srv://hariprasadsoundararajan:kvf6KrNmcIdXOxPX@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority"
+    "mongodb+srv://hariprasadsoundararajan:kvf6KrNmcIdXOxPX@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority"
 );
 
 app.get("/getBooks", (req, res) => {
@@ -24,6 +24,14 @@ app.get("/getBooks", (req, res) => {
             res.json(result);
         }
     });
+});
+
+app.post("/addBook", async (req, res) => {
+    const book = req.body;
+    const newBook = new RoomModel(book);
+    await newBook.save();
+
+    res.json(book);
 });
 
 app.listen(3001, () => {

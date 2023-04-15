@@ -3,7 +3,9 @@ import React from "react";
 export default function Bookcard({ data }) {
     return (
         <div className="book-card">
-            <div className="img-section"><img src={data.imgaddress} /></div>
+            <div className="img-section">
+                <img alt="no-img-found" src={data.imgaddress} />
+            </div>
             <div className="info-section">
                 <p>Book Name: {data.bookname}</p>
                 <p>Author: {data.author}</p>
