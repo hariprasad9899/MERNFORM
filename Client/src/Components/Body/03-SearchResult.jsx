@@ -11,6 +11,9 @@ export default function SearchResult() {
     // let [searchResult, setSearchResult] = useState(pilot);
 
     let searchResult = useSelector((state) => state.searchdata.searchrack);
+    let searchStatus = useSelector((state) => state.querydata.searchquery.startsearch);
+
+    console.log(searchStatus);
 
     return (
         <div className="search-result">
@@ -20,6 +23,7 @@ export default function SearchResult() {
                     <Bookcard data={item} key={item._id} />
                 ))}
             </div>
+            {/* {searchStatus ? <h1>Search Started</h1> : null} */}
         </div>
     );
 }
