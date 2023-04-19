@@ -12,7 +12,7 @@ const bookdataSlice = createSlice({
             state.bookrack = [...action.payload];
         },
     },
-});
+}); 
 
 export default bookdataSlice.reducer;
 export const { addbook } = bookdataSlice.actions;

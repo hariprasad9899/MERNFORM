@@ -1,4 +1,4 @@
-@mixin  flexFiller($dir,$adir,$jdir,$gapVal) {
+@mixin flexFiller($dir, $adir, $jdir, $gapVal) {
     display: flex;
     flex-direction: $dir;
     align-items: $adir;
@@ -6,7 +6,7 @@
     gap: $gapVal;
 }
 
-@mixin centerIt(){
+@mixin centerIt() {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -18,36 +18,36 @@
     align-items: center;
 }
 
-@mixin width-height($w,$h) {
+@mixin width-height($w, $h) {
     width: $w;
     height: $h;
 }
 
-@mixin  cursorHover($color) {
+@mixin cursorHover($color) {
     cursor: pointer;
     color: $color;
 }
 
-@mixin  searchBG($bgColor,$bgPos,$bgRep,$bgSize) {
+@mixin searchBG($bgColor, $bgPos, $bgRep, $bgSize) {
     background-color: $bgColor;
     background-position: $bgPos;
     background-repeat: $bgRep;
     background-size: $bgSize;
 }
 
-@mixin font-size-weight($size,$weight) {
+@mixin font-size-weight($size, $weight) {
     font-size: $size;
     font-weight: $weight;
 }
 
-@mixin setBackground($setRep,$setPosX,$setPosY,$setSize) {
+@mixin setBackground($setRep, $setPosX, $setPosY, $setSize) {
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: center;
     background-size: cover;
 }
 
-@mixin  setBorderRadius($position, $leftRadius,$RightRadius) {
+@mixin setBorderRadius($position, $leftRadius, $RightRadius) {
     @if $position == up {
         border-top-left-radius: $leftRadius;
         border-top-right-radius: $RightRadius;
@@ -57,10 +57,38 @@
     }
 }
 
+@mixin inner-div {
+    @include flexFiller(row, center, start, 10px);
+    flex-wrap: wrap;
+    .book-card {
+        @include flexFiller(row, center, center, 0);
+        overflow: hidden;
+        background-image: linear-gradient(35.2deg, rgba(0, 119, 182, 1) -18.7%, rgb(5, 5, 6) 54.3%);
+        width: 500px;
+        height: 300px;
+        .img-section {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            img {
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .info-section {
+            width: 50%;
+            height: 100%;
+            padding: 10px;
+            text-align: left;
+        }
+    }
+}
 
 $Max-Xsml: 600px;
 $Min-Sml: 600px;
 $Min-Med: 768px;
-$Min-Lar:992px;
+$Min-Lar: 992px;
 $Min-Xlar: 1200px;
 $Min-Xxlar: 1200px;

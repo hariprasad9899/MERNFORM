@@ -18,6 +18,7 @@ export default function Collections() {
     //     });
     // }, []);
 
+    // using Redux State
     let rackData = useSelector((state) => state.bookdata.bookrack);
     let dispatch = useDispatch();
 
