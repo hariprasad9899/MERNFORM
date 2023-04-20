@@ -27,7 +27,9 @@ app.get("/getBooks", (req, res) => {
 });
 
 app.get("/findBooks", (req, res) => {
-    RoomModel.find({ Year: "1919" }, (err, result) => {
+    console.log(req);
+
+    RoomModel.find(req.query, (err, result) => {
         if (err) {
             res.json(err);
         } else {

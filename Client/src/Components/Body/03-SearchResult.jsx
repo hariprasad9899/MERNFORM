@@ -17,10 +17,17 @@ export default function SearchResult() {
 
     let searchquery = useSelector((state) => state.querydata.searchquery);
 
+    let options = {
+        method: "get",
+        params: {
+            ...searchquery,
+        },
+        url: "http://localhost:3001/findBooks",
+    };
+
     useEffect(() => {
         if (searchStatus) {
-            Axios.get("http://localhost:3001/findBooks", searchquery).then((res) => {
-                console.log()
+            Axios.request(options).then((res) => {
                 dispatch(searchbook([...searchResult, ...res.data]));
             });
         }
