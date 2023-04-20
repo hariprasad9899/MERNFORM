@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchbooktype } from "./querySlice";
+import { close, open } from "../Body/closeSlice";
 
 export default function Searchbook() {
     let placeHolder = "Search By";
@@ -17,6 +18,7 @@ export default function Searchbook() {
 
     const dropMe = (val) => {
         setSearchType(val);
+        setInputVal("");
         setDrop(false);
     };
 
@@ -26,6 +28,7 @@ export default function Searchbook() {
         if (inputVal.length > 0) {
             if (searchType !== placeHolder) {
                 dispatch(searchbooktype({ type: obj[searchType], startsearch: true, value: inputVal }));
+                dispatch(open());
             }
         } else {
             alert("Please type any value to search!");

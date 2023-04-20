@@ -8,9 +8,20 @@
     border-radius: 40px;
     padding: 1rem;
     border: 1px solid white;
+    .heads {
+        @include flexFiller(row, center, space-between, 0);
+    }
     .head-name {
         text-align: left;
         color: blue;
+    }
+    .close {
+        text-align: right;
+        font-size: 2rem;
+        &:hover {
+            cursor: pointer;
+            color: white;
+        }
     }
     .inner-div {
         @include inner-div();

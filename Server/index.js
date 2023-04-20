@@ -27,11 +27,8 @@ app.get("/getBooks", (req, res) => {
 });
 
 app.get("/findBooks", (req, res) => {
-    console.log(req.query);
-    let key = req.query.type;
-    let val = req.query.value;
     let queryObj = {
-        [key]: [val],
+        [req.query.type]: [req.query.value],
     };
     RoomModel.find(queryObj, (err, result) => {
         if (err) {

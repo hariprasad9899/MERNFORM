@@ -9,7 +9,7 @@ const searchdataSlice = createSlice({
     initialState,
     reducers: {
         searchbook: (state, action) => {
-            state.searchrack = [...action.payload];
+            state.searchrack = action.payload;
         },
         clearsearch: (state, action) => {
             state.searchrack = [];

@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import data from "./sample";
 import Bookcard from "./02-Bookcard";
 import Axios from "axios";
-import { searchbook } from "./searchSlice";
+import { searchbook, clearsearch } from "./searchSlice";
+import { close } from "./closeSlice";
 
 export default function SearchResult() {
     let pilot = data;
@@ -26,18 +27,27 @@ export default function SearchResult() {
     };
 
     useEffect(() => {
-        console.log(searchStatus);
         if (searchStatus) {
-            console.log(searchStatus);
             Axios.request(options).then((res) => {
                 dispatch(searchbook(res.data));
+                
             });
         }
     }, []);
 
+    const updateSearchDiv = () => {
+        dispatch(close());
+        dispatch(clearsearch());
+    };
+
     return (
         <div className="search-result">
-            <h2 className="head-name">Search Result</h2>
+            <div className="heads">
+                <h2 className="head-name">Search Result</h2>
+                <h2 className="head-name close" onClick={() => updateSearchDiv()}>
+                    &times;
+                </h2>
+            </div>
             <div className="inner-div">
                 {searchResult.map((item) => (
                     <Bookcard data={item} key={item._id} />

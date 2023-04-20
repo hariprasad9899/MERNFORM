@@ -3,13 +3,16 @@ import Query from "./Components/Query/01-Query";
 import "./App.scss";
 import Collections from "./Components/Body/01-Collections";
 import SearchResult from "./Components/Body/03-SearchResult";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
+    let closeBtn = useSelector((state) => state.searchdiv.closeBtn);
+
     return (
         <div className="App">
             <Query />
-            {/* <Collections /> */}
-            <SearchResult />
+            {closeBtn ? <SearchResult /> : null}
+            <Collections />
         </div>
     );
 }

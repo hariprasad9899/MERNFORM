@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
     searchquery: {
         type: "",
@@ -13,7 +14,6 @@ const querydataSlice = createSlice({
     reducers: {
         searchbooktype: (state, action) => {
             state.searchquery = { ...action.payload };
-            // console.log(state.searchquery);
         },
     },
 });
