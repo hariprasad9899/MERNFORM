@@ -26,6 +26,16 @@ app.get("/getBooks", (req, res) => {
     });
 });
 
+app.get("/findBooks", (req, res) => {
+    RoomModel.find({ Year: "1919" }, (err, result) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
 app.post("/addBook", async (req, res) => {
     const book = req.body;
     const newBook = new RoomModel(book);

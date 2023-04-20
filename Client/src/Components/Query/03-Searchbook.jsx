@@ -9,6 +9,12 @@ export default function Searchbook() {
     let [drop, setDrop] = useState(false);
     let dispatch = useDispatch();
 
+    let obj = {
+        Author: "author",
+        Year: "year",
+        "Book Name": "bookname",
+    };
+
     const dropMe = (val) => {
         setSearchType(val);
         setDrop(false);
@@ -20,8 +26,7 @@ export default function Searchbook() {
         console.log("submit triggered");
         if (inputVal.length > 0) {
             if (searchType !== placeHolder) {
-                dispatch(searchbooktype({ type: searchType, startsearch: true, startsearch: inputVal }));
-                console.log(searchStatus);
+                dispatch(searchbooktype({ type: obj[searchType], startsearch: true, value: inputVal }));
             }
         } else {
             alert("Please type any value to search!");

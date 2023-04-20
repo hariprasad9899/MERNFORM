@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./03-SearchResultStyle.scss";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import data from "./sample";
 import Bookcard from "./02-Bookcard";
 import Axios from "axios";
+import { searchbook } from "./searchSlice";
 
 export default function SearchResult() {
     let pilot = data;
@@ -12,8 +13,18 @@ export default function SearchResult() {
 
     let searchResult = useSelector((state) => state.searchdata.searchrack);
     let searchStatus = useSelector((state) => state.querydata.searchquery.startsearch);
+    let dispatch = useDispatch();
 
-    console.log(searchStatus);
+    let searchquery = useSelector((state) => state.querydata.searchquery);
+
+    useEffect(() => {
+        if (searchStatus) {
+            Axios.get("http://localhost:3001/findBooks", searchquery).then((res) => {
+                console.log()
+                dispatch(searchbook([...searchResult, ...res.data]));
+            });
+        }
+    }, []);
 
     return (
         <div className="search-result">
@@ -23,7 +34,7 @@ export default function SearchResult() {
                     <Bookcard data={item} key={item._id} />
                 ))}
             </div>
-            {/* {searchStatus ? <h1>Search Started</h1> : null} */}
+            {searchStatus ? <h1>Search Started</h1> : null}
         </div>
     );
 }
