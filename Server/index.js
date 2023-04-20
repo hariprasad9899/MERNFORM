@@ -27,9 +27,13 @@ app.get("/getBooks", (req, res) => {
 });
 
 app.get("/findBooks", (req, res) => {
-    console.log(req);
-
-    RoomModel.find(req.query, (err, result) => {
+    console.log(req.query);
+    let key = req.query.type;
+    let val = req.query.value;
+    let queryObj = {
+        [key]: [val],
+    };
+    RoomModel.find(queryObj, (err, result) => {
         if (err) {
             res.json(err);
         } else {

@@ -13,7 +13,7 @@ const querydataSlice = createSlice({
     reducers: {
         searchbooktype: (state, action) => {
             state.searchquery = { ...action.payload };
-            console.log(state.searchquery);
+            // console.log(state.searchquery);
         },
     },
 });

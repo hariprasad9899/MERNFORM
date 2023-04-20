@@ -26,9 +26,11 @@ export default function SearchResult() {
     };
 
     useEffect(() => {
+        console.log(searchStatus);
         if (searchStatus) {
+            console.log(searchStatus);
             Axios.request(options).then((res) => {
-                dispatch(searchbook([...searchResult, ...res.data]));
+                dispatch(searchbook(res.data));
             });
         }
     }, []);

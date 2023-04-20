@@ -23,7 +23,6 @@ export default function Searchbook() {
     let searchStatus = useSelector((state) => state.querydata.searchquery);
 
     const submitSearch = () => {
-        console.log("submit triggered");
         if (inputVal.length > 0) {
             if (searchType !== placeHolder) {
                 dispatch(searchbooktype({ type: obj[searchType], startsearch: true, value: inputVal }));
