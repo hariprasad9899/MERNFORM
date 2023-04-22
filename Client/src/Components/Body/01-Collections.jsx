@@ -10,23 +10,18 @@ import { addbook } from "./bookSlice";
 export default function Collections() {
     let pilot = data;
 
-    // let [rackData, setRackData] = useState(pilot);
-
-    // useEffect(() => {
-    //     Axios.get("http://localhost:3001/getBooks").then((res) => {
-    //         setRackData((t) => [...rackData, ...res.data]);
-    //     });
-    // }, []);
-
     // using Redux State
     let rackData = useSelector((state) => state.bookdata.bookrack);
+    let newbookadded = useSelector((state) => state.bookdata.newbookadded);
     let dispatch = useDispatch();
 
     useEffect(() => {
-        Axios.get("http://localhost:3001/getBooks").then((res) => {
-            dispatch(addbook([...rackData, ...res.data]));
-        });
-    }, []);
+        if (newbookadded) {
+            Axios.get("http://localhost:3001/getBooks").then((res) => {
+                dispatch(addbook([...res.data]));
+            });
+        }
+    }, [newbookadded]);
 
     return (
         <div className="book-collection">

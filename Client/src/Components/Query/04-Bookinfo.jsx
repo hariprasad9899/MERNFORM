@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./02-BookinfoStyle.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addbook } from "../Body/bookSlice";
+import { addbook, updatebook } from "../Body/bookSlice";
 import Axios from "axios";
 
 export default function Bookinfo({ setShowModel }) {
@@ -34,9 +34,8 @@ export default function Bookinfo({ setShowModel }) {
 
     const addBooktoServer = () => {
         Axios.post("http://localhost:3001/addBook", { ...bookInfo }).then((res) => {
-            alert("book added");
-            // setBookInfo([...bookInfo, ...bookInfo]);
-            dispatch(addbook([...rackData, ...res.data]));
+            dispatch(updatebook());
+            alert("Book added");
         });
     };
 
