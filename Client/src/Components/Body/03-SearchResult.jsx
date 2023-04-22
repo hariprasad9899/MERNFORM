@@ -6,6 +6,7 @@ import Bookcard from "./02-Bookcard";
 import Axios from "axios";
 import { searchbook, clearsearch } from "./searchSlice";
 import { close } from "./closeSlice";
+import { resetsearch } from "../Query/querySlice";
 
 export default function SearchResult() {
     let pilot = data;
@@ -28,16 +29,18 @@ export default function SearchResult() {
 
     useEffect(() => {
         if (searchStatus) {
+            dispatch(clearsearch());
             Axios.request(options).then((res) => {
                 dispatch(searchbook(res.data));
-                
             });
+            dispatch(resetsearch());
         }
-    }, []);
+    }, [searchStatus]);
 
     const updateSearchDiv = () => {
         dispatch(close());
         dispatch(clearsearch());
+        dispatch(resetsearch());
     };
 
     return (
@@ -53,7 +56,7 @@ export default function SearchResult() {
                     <Bookcard data={item} key={item._id} />
                 ))}
             </div>
-            {searchStatus ? <h1>Search Started</h1> : null}
+            {searchStatus ? <h1>Searching....</h1> : null}
         </div>
     );
 }

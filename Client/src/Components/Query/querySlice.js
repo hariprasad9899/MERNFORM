@@ -15,8 +15,11 @@ const querydataSlice = createSlice({
         searchbooktype: (state, action) => {
             state.searchquery = { ...action.payload };
         },
+        resetsearch: (state, action) => {
+            state.searchquery.startsearch = false;
+        },
     },
 });
 
 export default querydataSlice.reducer;
-export const { searchbooktype } = querydataSlice.actions;
+export const { searchbooktype, resetsearch } = querydataSlice.actions;

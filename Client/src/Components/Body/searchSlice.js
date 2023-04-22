@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import data from "./sample";
+import { useDispatch } from "react-redux";
+import { resetsearch } from "../Query/querySlice";
 const initialState = {
-    searchrack: [...data],
+    searchrack: [],
 };
 
 const searchdataSlice = createSlice({
@@ -12,7 +14,7 @@ const searchdataSlice = createSlice({
             state.searchrack = action.payload;
         },
         clearsearch: (state, action) => {
-            state.searchrack = [];
+            state.searchrack.splice(0, state.searchrack.length);
         },
     },
 });
