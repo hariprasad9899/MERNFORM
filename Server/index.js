@@ -43,8 +43,23 @@ app.post("/addBook", async (req, res) => {
     const book = req.body;
     const newBook = new RoomModel(book);
     await newBook.save();
-
     res.json(book);
+});
+
+app.delete("/deleteBook/", (req, res) => {
+    const deleteId = req.query.id;
+    console.log(deleteId);
+    // RoomModel.findOneAndDelete({ _id: deleteId }, (err, docs) => {
+    //     if (err) {
+    //         res.send({ error: true });
+    //     } else {
+    //         if (docs) {
+    //             res.send(docs);
+    //         } else {
+    //             res.send({ error: true });
+    //         }
+    //     }
+    // });
 });
 
 app.listen(3001, () => {

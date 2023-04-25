@@ -1,4 +1,9 @@
-@import " ../../../../Helper/styleHelper";
+// @import " ../../../../Helper/styleHelper";
+// @import "../../../src/Helper/addins";
+// @import "../../../../Client/"
+
+@import "../../Helper/styleHelper";
+@import "../../Helper/addins";
 
 .search-result {
     width: 90%;
@@ -24,6 +29,7 @@
         }
     }
     .inner-div {
+        color: red;
         @include inner-div();
     }
 }
