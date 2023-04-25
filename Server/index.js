@@ -48,18 +48,17 @@ app.post("/addBook", async (req, res) => {
 
 app.delete("/deleteBook/", (req, res) => {
     const deleteId = req.query.id;
-    console.log(deleteId);
-    // RoomModel.findOneAndDelete({ _id: deleteId }, (err, docs) => {
-    //     if (err) {
-    //         res.send({ error: true });
-    //     } else {
-    //         if (docs) {
-    //             res.send(docs);
-    //         } else {
-    //             res.send({ error: true });
-    //         }
-    //     }
-    // });
+    RoomModel.findOneAndDelete({ _id: deleteId }, (err, docs) => {
+        if (err) {
+            res.send({ error: true });
+        } else {
+            if (docs) {
+                res.send(docs);
+            } else {
+                res.send({ error: true });
+            }
+        }
+    });
 });
 
 app.listen(3001, () => {
