@@ -36,6 +36,7 @@ export default function Bookinfo({ setShowModel }) {
         Axios.post("http://localhost:3001/addBook", { ...bookInfo }).then((res) => {
             dispatch(updatebook());
             alert("Book added");
+            setShowModel(false);
         });
     };
 
