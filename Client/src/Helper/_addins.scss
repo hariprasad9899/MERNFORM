@@ -1,7 +1,7 @@
 @import "./styleHelper";
 
 @mixin inner-div {
-    @include flexFiller(row, center, start, 10px);
+    @include flexFiller(row, center, space-between, 10px);
     flex-wrap: wrap;
     .book-card {
         @include flexFiller(row, center, center, 0);
