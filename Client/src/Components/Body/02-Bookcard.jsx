@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import DeletePopUp from "./04-DeletePopUp";
 import { createPortal } from "react-dom";
 import UpdatePop from "./04-UpdatePop";
+import { useSelector } from "react-redux";
+import { close, open } from "./updatePopSlice";
 export default function Bookcard({ data }) {
     let dispatch = useDispatch();
 
@@ -52,6 +54,7 @@ export default function Bookcard({ data }) {
     const [updateBookData, setUpdateBookData] = useState(false);
     const [updateId, setUpdateId] = useState("");
     const [updatePop, setUpdatePop] = useState(false);
+    const updatePopState = useSelector((state) => state.updatePopState.isOpen);
     let pilot = {
         bookname: data["bookname"],
         author: data["author"],
@@ -63,8 +66,11 @@ export default function Bookcard({ data }) {
     let [bookInfo, setBookInfo] = useState(pilot);
 
     const updatebookfromDB = (data) => {
-        setUpdatePop(true);
-        setUpdateId(data["_id"]);
+        if (!updatePopState) {
+            setUpdatePop(true);
+            setUpdateId(data["_id"]);
+            dispatch(open());
+        }
     };
 
     if (updateBookData) {
@@ -79,6 +85,7 @@ export default function Bookcard({ data }) {
         Axios.request(options).then((res) => {
             setUpdateBookData(false);
             dispatch(updatebook());
+            dispatch(close());
             setUpdatePop(false);
         });
     }

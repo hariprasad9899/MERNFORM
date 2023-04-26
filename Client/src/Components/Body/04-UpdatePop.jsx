@@ -8,6 +8,14 @@ export default function UpdatePop({ bookInfo, setBookInfo, setUpdatePop, setUpda
         });
     };
 
+    const submitUpdate = () => {
+        setUpdateBookData(true);
+    };
+
+    const submitCancel = () => {
+        setUpdatePop(false);
+    };
+
     return (
         <div className="update-popup">
             <div className="inner-container">
@@ -78,8 +86,8 @@ export default function UpdatePop({ bookInfo, setBookInfo, setUpdatePop, setUpda
                 </div>
 
                 <div className="complete">
-                    <button onClick={() => setUpdateBookData(true)}>Submit</button>
-                    <button onClick={() => setUpdatePop(false)}>Cancel</button>
+                    <button onClick={() => submitUpdate()}>Submit</button>
+                    <button onClick={() => submitCancel()}>Cancel</button>
                 </div>
             </div>
         </div>
