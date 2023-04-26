@@ -13,9 +13,13 @@ export default function DeletePopUp({ showPop, setShowPop, deleteBook, setDelete
 
     return (
         <div className="delete-popup">
-            <h2>Are you sure, you want to delete this Book ? </h2>
-            <button onClick={() => confirmationYes()}>Yes</button>
-            <button onClick={() => confirmationNo()}>No</button>
+            <div className="conf-text">
+                <h2>Are you sure, you want to delete this Book ? </h2>
+            </div>
+            <div className="conf-btn">
+                <button onClick={() => confirmationYes()}>Yes</button>
+                <button onClick={() => confirmationNo()}>No</button>
+            </div>
         </div>
     );
 }
