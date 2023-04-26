@@ -1,14 +1,14 @@
 import React from "react";
 import "./04-DeletePopUpStyle.scss";
 
-export default function DeletePopUp({ showPop, setShowPop, deleteBook, setDeleteBook }) {
+export default function DeletePopUp({ deletePop, setDeletePop, deleteBook, setDeleteBook }) {
     const confirmationYes = () => {
-        setShowPop(false);
+        setDeletePop(false);
         setDeleteBook(true);
     };
 
     const confirmationNo = () => {
-        setShowPop(false);
+        setDeletePop(false);
     };
 
     return (

@@ -1,0 +1,54 @@
+@import "../../Helper/styleHelper";
+
+.update-popup {
+    width: 40rem;
+    // height: 10rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    font-size: 2vh;
+    padding: 0.5rem;
+    transform: translate(-50%, -50%);
+    background-color: rgb(36, 45, 52);
+    .inner-container {
+        margin: auto;
+        padding-right: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 1rem;
+        .close-btn {
+            text-align: right;
+            font-size: 2rem;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .input-form {
+            padding: 10px;
+            .book-details {
+                @include flexFiller(row, center, space-between, 0);
+                margin-top: 10px;
+                input {
+                    width: 50%;
+                    border: none;
+                    outline: none;
+                    padding: 10px;
+                }
+                label {
+                    font-weight: 600;
+                }
+            }
+        }
+        .complete {
+            margin-top: 20px;
+            @include flexFiller(row, center, center, 20px);
+            button {
+                width: 8rem;
+                padding: 7px;
+                font-size: 1rem;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

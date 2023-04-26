@@ -4,20 +4,20 @@ import { updatebook } from "./bookSlice";
 import { useDispatch } from "react-redux";
 import DeletePopUp from "./04-DeletePopUp";
 import { createPortal } from "react-dom";
+import UpdatePop from "./04-UpdatePop";
 export default function Bookcard({ data }) {
     let dispatch = useDispatch();
 
-    let [showPop, setShowPop] = useState(false);
+    let [deletePop, setDeletePop] = useState(false);
     let [deleteBook, setDeleteBook] = useState(false);
     let [deleteId, setDeleteId] = useState("");
 
-    const deleteRecord = (options) => {};
-
     const deleteBookfromDB = (id) => {
-        setShowPop(true);
+        setDeletePop(true);
         setDeleteId(id);
     };
 
+    // Method 1: Passing id using body
     if (deleteBook) {
         let options = {
             method: "delete",
@@ -33,6 +33,56 @@ export default function Bookcard({ data }) {
         });
     }
 
+    // // Method 2: Passing id using link
+    // if (deleteBook) {
+    //     let options = {
+    //         method: "delete",
+    //         params: {
+    //             id: deleteId,
+    //         },
+    //         url: `http://localhost:3001/deleteBook/${deleteId}`,
+    //     };
+
+    //     Axios.request(options).then((res) => {
+    //         dispatch(updatebook());
+    //         setDeleteBook(false);
+    //     });
+    // }
+
+    const [updateBookData, setUpdateBookData] = useState(false);
+    const [updateId, setUpdateId] = useState("");
+    const [updatePop, setUpdatePop] = useState(false);
+    let pilot = {
+        bookname: data["bookname"],
+        author: data["author"],
+        year: data["year"],
+        rent: data["rent"],
+        buy: data["buy"],
+        imgaddress: data["imgaddress"],
+    };
+    let [bookInfo, setBookInfo] = useState(pilot);
+
+    const updatebookfromDB = (data) => {
+        setUpdatePop(true);
+        setUpdateId(data["_id"]);
+    };
+
+    if (updateBookData) {
+        let options = {
+            method: "put",
+            params: {
+                ...bookInfo,
+            },
+            url: `http://localhost:3001/updateBook/${updateId}`,
+        };
+
+        Axios.request(options).then((res) => {
+            setUpdateBookData(false);
+            dispatch(updatebook());
+            setUpdatePop(false);
+        });
+    }
+
     return (
         <div className="book-card">
             <div className="img-section">
@@ -44,15 +94,30 @@ export default function Bookcard({ data }) {
                 <p>Year: {data.year}</p>
                 <p>Rent: {data.rent}</p>
                 <p>Buy: {data.buy}</p>
-                <button className="edit-btn modify">Edit</button>
+                <button className="edit-btn modify" onClick={() => updatebookfromDB(data)}>
+                    Edit
+                </button>
+
+                {updatePop
+                    ? createPortal(
+                          <UpdatePop
+                              setBookInfo={setBookInfo}
+                              bookInfo={bookInfo}
+                              setUpdatePop={setUpdatePop}
+                              setUpdateBookData={setUpdateBookData}
+                          />,
+                          document.getElementById("root")
+                      )
+                    : null}
+
                 <button className="delete-btn modify" onClick={() => deleteBookfromDB(data._id)}>
                     Delete
                 </button>
-                {showPop
+                {deletePop
                     ? createPortal(
                           <DeletePopUp
-                              showPop={showPop}
-                              setShowPop={setShowPop}
+                              deletePop={deletePop}
+                              setDeletePop={setDeletePop}
                               deleteBook={deleteBook}
                               setDeleteBook={setDeleteBook}
                           />,

@@ -47,7 +47,13 @@ app.post("/addBook", async (req, res) => {
 });
 
 app.delete("/deleteBook/", (req, res) => {
+    // Method 1: Passing id using body
     const deleteId = req.query.id;
+
+    // Method 2: Getting id using url
+    // const deleteId = req.params.id;
+    // For method 2, the url should be "/deleteBook/:id"
+
     RoomModel.findOneAndDelete({ _id: deleteId }, (err, docs) => {
         if (err) {
             res.send({ error: true });
@@ -59,6 +65,17 @@ app.delete("/deleteBook/", (req, res) => {
             }
         }
     });
+});
+
+app.put("/updateBook/:id", async (req, res) => {
+    const _id = req.params.id;
+    const update = req.query;
+    try {
+        const updatedModel = await RoomModel.findByIdAndUpdate(_id, update, { new: true });
+        res.send(updatedModel);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 app.listen(3001, () => {
