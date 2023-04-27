@@ -10,7 +10,7 @@
     border: 1px solid white;
     .head-name {
         text-align: left;
-        color: blue;
+        color: rgb(255, 104, 104);
     }
     .inner-div {
         @include inner-div();

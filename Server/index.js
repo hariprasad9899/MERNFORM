@@ -78,6 +78,17 @@ app.put("/updateBook/:id", async (req, res) => {
     }
 });
 
+app.get("/filterbooks/", async (req, res) => {
+    const queryObj = req.query;
+    RoomModel.find(queryObj, (err, result) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
 app.listen(3001, () => {
     console.log("Server is started!!");
 });
