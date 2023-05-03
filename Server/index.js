@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const RoomModel = require("./models/RoomModel");
+const { getQuery } = require("./helpers/getQuery");
 require("dotenv").config();
 
 const cors = require("cors");
@@ -78,9 +79,11 @@ app.put("/updateBook/:id", async (req, res) => {
     }
 });
 
-app.get("/filterbooks/", async (req, res) => {
+app.get("/filterBooks/", async (req, res) => {
     const queryObj = req.query;
-    RoomModel.find(queryObj, (err, result) => {
+    const queryVal = getQuery(queryObj);
+    console.log(queryVal);
+    RoomModel.find(queryVal, (err, result) => {
         if (err) {
             res.json(err);
         } else {

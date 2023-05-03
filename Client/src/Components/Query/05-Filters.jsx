@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./05-FiltersStyle.scss";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Axios from "axios";
+import { addbook } from "../Body/bookSlice";
 
 export default function Filters() {
+    let dispatch = useDispatch();
+
     // drop state for Filter By
     const [dropTypeFilter, setDropTypeFilter] = useState(false);
     // drop state for Query By
@@ -33,16 +37,15 @@ export default function Filters() {
     };
 
     let queryObj = {
-        gt: "Greater Than or Equal To",
+        gte: "Greater Than or Equal To",
         eq: "Equal To",
-        lt: "Less Than or Equal To",
+        lte: "Less Than or Equal To",
     };
 
     const updateQueryVal = (type) => {
         setFilterQueryVal(queryObj[type]);
         setDropQueryFilter(false);
         setDataQueryVal(type);
-        console.log(dataQueryVal);
     };
 
     let typeObj = {
@@ -55,14 +58,32 @@ export default function Filters() {
         setFilterTypeVal(typeObj[type]);
         setDropTypeFilter(false);
         setDataTypeVal(type);
-        console.log(dataTypeVal);
     };
 
     const updateInputVal = (val) => {
         setInputVal(val);
     };
 
-    const fetchResult = () => {};
+    let rackData = useSelector((state) => state.bookdata.bookrack);
+
+    const fetchResult = () => {
+        if (filterTypeVal != "Filter by" && filterQueryVal != "Choose Query") {
+            let options = {
+                method: "get",
+                params: {
+                    unit: dataQueryVal,
+                    val: inputVal,
+                    type: filterTypeVal.toLowerCase(),
+                },
+                url: "http://localhost:3001/filterBooks",
+            };
+
+            Axios.request(options).then((res) => {
+                console.log(res);
+                dispatch(addbook([...res.data]));
+            });
+        }
+    };
 
     return (
         <div className="filter-book">
@@ -86,9 +107,9 @@ export default function Filters() {
                         {filterQueryVal}
                     </p>
                     <div className="drop-content">
-                        <p onClick={() => updateQueryVal("gt")}>Greater Than or Equal To</p>
+                        <p onClick={() => updateQueryVal("gte")}>Greater Than or Equal To</p>
                         <p onClick={() => updateQueryVal("eq")}>Equal To</p>
-                        <p onClick={() => updateQueryVal("lt")}>Less Than or Equal To</p>
+                        <p onClick={() => updateQueryVal("lte")}>Less Than or Equal To</p>
                     </div>
                 </div>
                 <div className="input-val">
