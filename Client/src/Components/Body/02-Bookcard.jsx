@@ -79,7 +79,7 @@ export default function Bookcard({ data }) {
             params: {
                 ...bookInfo,
             },
-            url: `/updateBook/${updateId}`,
+            url: `https://librarydata.onrender.com/updateBook/${updateId}`,
         };
 
         Axios.request(options).then((res) => {
