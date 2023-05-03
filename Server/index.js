@@ -4,17 +4,19 @@ const mongoose = require("mongoose");
 const RoomModel = require("./models/RoomModel");
 const { getQuery } = require("./helpers/getQuery");
 require("dotenv").config();
+const PASSWORD = process.env.NEWPASSWORD;
 
 const cors = require("cors");
 app.use(cors());
 
-// mongodb+srv://hariprasadsoundararajan:kvf6KrNmcIdXOxPX@cluster0.4grd3ac.mongodb.net/?retryWrites=true&w=majority
-// mongodb+srv://hariprasadsoundararajan:kvf6KrNmcIdXOxPX@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority
-
 app.use(express.json());
+console.log(PASSWORD);
+let connectionString =
+    "mongodb+srv://hariprasadsoundararajan:" +
+    PASSWORD +
+    "@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority";
 mongoose.connect(
-    // "mongodb+srv://hariprasadsoundararajan:kvf6KrNmcIdXOxPX@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority"
-    "mongodb+srv://hariprasadsoundararajan:kvf6KrNmcIdXOxPX@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority"
+    `mongodb+srv://hariprasadsoundararajan:${PASSWORD}@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority`
 );
 
 app.get("/getBooks", (req, res) => {
