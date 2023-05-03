@@ -46,6 +46,7 @@ export default function Filters() {
         setFilterQueryVal(queryObj[type]);
         setDropQueryFilter(false);
         setDataQueryVal(type);
+        setInputVal("");
     };
 
     let typeObj = {
@@ -58,6 +59,7 @@ export default function Filters() {
         setFilterTypeVal(typeObj[type]);
         setDropTypeFilter(false);
         setDataTypeVal(type);
+        setInputVal("");
     };
 
     const updateInputVal = (val) => {
@@ -65,25 +67,51 @@ export default function Filters() {
     };
 
     let rackData = useSelector((state) => state.bookdata.bookrack);
+    let [filterBook, setFilterBook] = useState(false);
 
     const fetchResult = () => {
-        if (filterTypeVal != "Filter by" && filterQueryVal != "Choose Query") {
-            let options = {
-                method: "get",
-                params: {
-                    unit: dataQueryVal,
-                    val: inputVal,
-                    type: filterTypeVal.toLowerCase(),
-                },
-                url: "http://localhost:3001/filterBooks",
-            };
+        setFilterBook(true);
+    };
 
-            Axios.request(options).then((res) => {
-                console.log(res);
+    useEffect(() => {
+        if (filterBook) {
+            if (
+                filterTypeVal != "Filter by" &&
+                filterQueryVal != "Choose Query" &&
+                filterTypeVal.length > 0 &&
+                filterQueryVal.length > 0
+            ) {
+                let options = {
+                    method: "get",
+                    params: {
+                        unit: dataQueryVal,
+                        val: inputVal,
+                        type: filterTypeVal.toLowerCase(),
+                    },
+                    url: "http://localhost:3001/filterBooks",
+                };
+
+                Axios.request(options).then((res) => {
+                    dispatch(addbook([...res.data]));
+                    setFilterBook(false);
+                });
+            }
+        }
+    }, [filterBook]);
+
+    const [resetBooks, setResetBooks] = useState(false);
+    const handleReset = () => {
+        setResetBooks(true);
+    };
+
+    useEffect(() => {
+        if (resetBooks) {
+            Axios.get("http://localhost:3001/getBooks").then((res) => {
                 dispatch(addbook([...res.data]));
+                setResetBooks(true);
             });
         }
-    };
+    }, [resetBooks]);
 
     return (
         <div className="filter-book">
@@ -93,9 +121,13 @@ export default function Filters() {
                         {filterTypeVal}
                     </p>
                     <div className="drop-content">
-                        <p onClick={() => updateTypeVal("year")}>Year</p>
-                        <p onClick={() => updateTypeVal("rent")}>Rent</p>
-                        <p onClick={() => updateTypeVal("buy")}>Buy</p>
+                        {Object.entries(typeObj).map((item, index) => {
+                            return (
+                                <p key={index} onClick={() => updateTypeVal(item[0])}>
+                                    {item[1]}
+                                </p>
+                            );
+                        })}
                     </div>
                 </div>
                 <div
@@ -107,9 +139,13 @@ export default function Filters() {
                         {filterQueryVal}
                     </p>
                     <div className="drop-content">
-                        <p onClick={() => updateQueryVal("gte")}>Greater Than or Equal To</p>
-                        <p onClick={() => updateQueryVal("eq")}>Equal To</p>
-                        <p onClick={() => updateQueryVal("lte")}>Less Than or Equal To</p>
+                        {Object.entries(queryObj).map((item, index) => {
+                            return (
+                                <p key={index} onClick={() => updateQueryVal(item[0])}>
+                                    {item[1]}
+                                </p>
+                            );
+                        })}
                     </div>
                 </div>
                 <div className="input-val">
@@ -117,6 +153,9 @@ export default function Filters() {
                 </div>
                 <div className="find-query">
                     <button onClick={() => fetchResult()}>Find</button>
+                </div>
+                <div className="find-query">
+                    <button onClick={handleReset}>Reset</button>
                 </div>
             </div>
         </div>
