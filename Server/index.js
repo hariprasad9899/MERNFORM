@@ -82,7 +82,6 @@ app.put("/updateBook/:id", async (req, res) => {
 app.get("/filterBooks/", async (req, res) => {
     const queryObj = req.query;
     const queryVal = getQuery(queryObj);
-    console.log(queryVal);
     RoomModel.find(queryVal, (err, result) => {
         if (err) {
             res.json(err);

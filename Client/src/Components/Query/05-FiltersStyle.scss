@@ -10,6 +10,8 @@
     .input-box {
         padding: 30px;
         @include flexFiller(row, center, start, 1rem);
+        font-size: 1rem;
+        flex-wrap: wrap;
         .dropdown-type {
             width: 10vw;
             border: 1px solid white;
