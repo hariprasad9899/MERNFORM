@@ -10,11 +10,6 @@ const cors = require("cors");
 app.use(cors());
 
 app.use(express.json());
-console.log(PASSWORD);
-let connectionString =
-    "mongodb+srv://hariprasadsoundararajan:" +
-    PASSWORD +
-    "@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority";
 mongoose.connect(
     `mongodb+srv://hariprasadsoundararajan:${PASSWORD}@cluster0.4grd3ac.mongodb.net/library?retryWrites=true&w=majority`
 );
