@@ -24,7 +24,7 @@ export default function SearchResult() {
         params: {
             ...searchquery,
         },
-        url: "http://localhost:3001/findBooks",
+        url: "/findBooks",
     };
 
     useEffect(() => {

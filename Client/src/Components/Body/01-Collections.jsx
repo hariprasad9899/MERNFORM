@@ -17,7 +17,7 @@ export default function Collections() {
 
     useEffect(() => {
         if (newbookadded) {
-            Axios.get("http://localhost:3001/getBooks").then((res) => {
+            Axios.get("/getBooks").then((res) => {
                 dispatch(addbook([...res.data]));
             });
         }

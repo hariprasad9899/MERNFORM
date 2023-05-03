@@ -74,7 +74,7 @@ export default function Filters() {
                         val: inputVal,
                         type: filterVal.typeVal.toLowerCase(),
                     },
-                    url: "http://localhost:3001/filterBooks",
+                    url: "/filterBooks",
                 };
 
                 Axios.request(options).then((res) => {
@@ -95,7 +95,7 @@ export default function Filters() {
 
     useEffect(() => {
         if (bookFilter.reset) {
-            Axios.get("http://localhost:3001/getBooks").then((res) => {
+            Axios.get("/getBooks").then((res) => {
                 dispatch(addbook([...res.data]));
                 setBookFilter((t) => {
                     return { ...t, reset: false };

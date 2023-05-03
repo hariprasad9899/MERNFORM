@@ -79,7 +79,7 @@ export default function Bookcard({ data }) {
             params: {
                 ...bookInfo,
             },
-            url: `http://localhost:3001/updateBook/${updateId}`,
+            url: `/updateBook/${updateId}`,
         };
 
         Axios.request(options).then((res) => {
