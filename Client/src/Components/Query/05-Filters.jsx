@@ -8,19 +8,6 @@ import { addbook } from "../Body/bookSlice";
 export default function Filters() {
     let dispatch = useDispatch();
 
-    // // drop state for Filter By
-    // const [dropTypeFilter, setDropTypeFilter] = useState(false);
-    // // drop state for Query By
-    // const [dropQueryFilter, setDropQueryFilter] = useState(false);
-
-    // const [dropFilter, setDropFilter] = useState({
-    //     query: false,
-    //     type: false,
-    // });
-
-    // // state for filter type val
-    // const [filterTypeVal, setFilterTypeVal] = useState("Filter by");
-
     let queryObj = {
         gte: "Greater Than or Equal To",
         eq: "Equal To",
@@ -32,9 +19,6 @@ export default function Filters() {
         rent: "Rent",
         buy: "Buy",
     };
-
-    // state for filter query val
-    const [filterQueryVal, setFilterQueryVal] = useState("Choose Query");
 
     const [filterVal, setFilterVal] = useState({
         typeVal: "Filter by",
@@ -51,67 +35,38 @@ export default function Filters() {
     };
 
     const handleFilterVal = (selection) => {
-        if (["lte", "e", "gte"].includes(selection)) {
+        if (["lte", "eq", "gte"].includes(selection)) {
             setFilterVal((t) => {
-                return { ...t, queryval: queryObj[selection], queryUnit: selection };
+                return { ...t, queryval: queryObj[selection], queryUnit: selection, typeDrop: false, queryDrop: false };
             });
         } else {
             setFilterVal((t) => {
-                return { ...t, typeVal: typeObj[selection] };
+                return { ...t, typeVal: typeObj[selection], typeDrop: false, queryDrop: false };
             });
         }
     };
 
     // state for input box val
     const [inputVal, setInputVal] = useState("");
-
-    // // state for data val
-    // const [dataTypeVal, setDataTypeVal] = useState("");
-    // const [dataQueryVal, setDataQueryVal] = useState("");
-
-    // const updateTypeClickVal = () => {
-    //     setDropTypeFilter(!dropTypeFilter);
-    //     setDropQueryFilter(false);
-    // };
-
-    // const updateQueryClickVal = () => {
-    //     setDropQueryFilter(!dropQueryFilter);
-    //     setDropTypeFilter(false);
-    // };
-
-    // const updateQueryVal = (type) => {
-    //     setFilterQueryVal(queryObj[type]);
-    //     setDropQueryFilter(false);
-    //     setDataQueryVal(type);
-    //     setInputVal("");
-    // };
-
-    // const updateTypeVal = (type) => {
-    //     setFilterTypeVal(typeObj[type]);
-    //     setDropTypeFilter(false);
-    //     setDataTypeVal(type);
-    //     setInputVal("");
-    // };
-
     const updateInputVal = (val) => {
         setInputVal(val);
     };
 
     let rackData = useSelector((state) => state.bookdata.bookrack);
-    let [filterBook, setFilterBook] = useState(false);
+    let [bookFilter, setBookFilter] = useState({
+        filter: false,
+        reset: false,
+    });
 
     const fetchResult = () => {
-        setFilterBook(true);
+        setBookFilter((t) => {
+            return { ...t, filter: true };
+        });
     };
 
     useEffect(() => {
-        if (filterBook) {
-            if (
-                filterTypeVal != "Filter by" &&
-                filterQueryVal != "Choose Query" &&
-                filterTypeVal.length > 0 &&
-                filterQueryVal.length > 0
-            ) {
+        if (bookFilter.filter) {
+            if (filterVal.filterTypeVal != "Filter by" && filterVal.filterQueryVal != "Choose Query") {
                 let options = {
                     method: "get",
                     params: {
@@ -124,25 +79,30 @@ export default function Filters() {
 
                 Axios.request(options).then((res) => {
                     dispatch(addbook([...res.data]));
-                    setFilterBook(false);
+                    setBookFilter((t) => {
+                        return { ...t, filter: false };
+                    });
                 });
             }
         }
-    }, [filterBook]);
+    }, [bookFilter]);
 
-    const [resetBooks, setResetBooks] = useState(false);
     const handleReset = () => {
-        setResetBooks(true);
+        setBookFilter((t) => {
+            return { ...t, reset: true };
+        });
     };
 
     useEffect(() => {
-        if (resetBooks) {
+        if (bookFilter.reset) {
             Axios.get("http://localhost:3001/getBooks").then((res) => {
                 dispatch(addbook([...res.data]));
-                setResetBooks(true);
+                setBookFilter((t) => {
+                    return { ...t, reset: false };
+                });
             });
         }
-    }, [resetBooks]);
+    }, [bookFilter]);
 
     return (
         <div className="filter-book">
@@ -187,7 +147,7 @@ export default function Filters() {
                     <input type="text" value={inputVal} onChange={(e) => updateInputVal(e.target.value)} />
                 </div>
                 <div className="find-query">
-                    <button onClick={() => fetchResult()}>Find</button>
+                    <button onClick={fetchResult}>Find</button>
                 </div>
                 <div className="find-query">
                     <button onClick={handleReset}>Reset</button>
