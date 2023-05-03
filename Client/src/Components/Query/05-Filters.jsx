@@ -8,45 +8,23 @@ import { addbook } from "../Body/bookSlice";
 export default function Filters() {
     let dispatch = useDispatch();
 
-    // drop state for Filter By
-    const [dropTypeFilter, setDropTypeFilter] = useState(false);
-    // drop state for Query By
-    const [dropQueryFilter, setDropQueryFilter] = useState(false);
+    // // drop state for Filter By
+    // const [dropTypeFilter, setDropTypeFilter] = useState(false);
+    // // drop state for Query By
+    // const [dropQueryFilter, setDropQueryFilter] = useState(false);
 
-    // state for filter type val
-    const [filterTypeVal, setFilterTypeVal] = useState("Filter by");
+    // const [dropFilter, setDropFilter] = useState({
+    //     query: false,
+    //     type: false,
+    // });
 
-    // state for filter query val
-    const [filterQueryVal, setFilterQueryVal] = useState("Choose Query");
-
-    // state for input box val
-    const [inputVal, setInputVal] = useState("");
-
-    // state for data val
-    const [dataTypeVal, setDataTypeVal] = useState("");
-    const [dataQueryVal, setDataQueryVal] = useState("");
-
-    const updateTypeClickVal = () => {
-        setDropTypeFilter(!dropTypeFilter);
-        setDropQueryFilter(false);
-    };
-
-    const updateQueryClickVal = () => {
-        setDropQueryFilter(!dropQueryFilter);
-        setDropTypeFilter(false);
-    };
+    // // state for filter type val
+    // const [filterTypeVal, setFilterTypeVal] = useState("Filter by");
 
     let queryObj = {
         gte: "Greater Than or Equal To",
         eq: "Equal To",
         lte: "Less Than or Equal To",
-    };
-
-    const updateQueryVal = (type) => {
-        setFilterQueryVal(queryObj[type]);
-        setDropQueryFilter(false);
-        setDataQueryVal(type);
-        setInputVal("");
     };
 
     let typeObj = {
@@ -55,12 +33,65 @@ export default function Filters() {
         buy: "Buy",
     };
 
-    const updateTypeVal = (type) => {
-        setFilterTypeVal(typeObj[type]);
-        setDropTypeFilter(false);
-        setDataTypeVal(type);
-        setInputVal("");
+    // state for filter query val
+    const [filterQueryVal, setFilterQueryVal] = useState("Choose Query");
+
+    const [filterVal, setFilterVal] = useState({
+        typeVal: "Filter by",
+        queryval: "Choose Query",
+        typeDrop: false,
+        queryDrop: false,
+        queryUnit: "",
+    });
+
+    const handleDropDown = (selection) => {
+        setFilterVal((t) => {
+            return { ...t, typeDrop: false, queryDrop: false, [selection]: !t[selection] };
+        });
     };
+
+    const handleFilterVal = (selection) => {
+        if (["lte", "e", "gte"].includes(selection)) {
+            setFilterVal((t) => {
+                return { ...t, queryval: queryObj[selection], queryUnit: selection };
+            });
+        } else {
+            setFilterVal((t) => {
+                return { ...t, typeVal: typeObj[selection] };
+            });
+        }
+    };
+
+    // state for input box val
+    const [inputVal, setInputVal] = useState("");
+
+    // // state for data val
+    // const [dataTypeVal, setDataTypeVal] = useState("");
+    // const [dataQueryVal, setDataQueryVal] = useState("");
+
+    // const updateTypeClickVal = () => {
+    //     setDropTypeFilter(!dropTypeFilter);
+    //     setDropQueryFilter(false);
+    // };
+
+    // const updateQueryClickVal = () => {
+    //     setDropQueryFilter(!dropQueryFilter);
+    //     setDropTypeFilter(false);
+    // };
+
+    // const updateQueryVal = (type) => {
+    //     setFilterQueryVal(queryObj[type]);
+    //     setDropQueryFilter(false);
+    //     setDataQueryVal(type);
+    //     setInputVal("");
+    // };
+
+    // const updateTypeVal = (type) => {
+    //     setFilterTypeVal(typeObj[type]);
+    //     setDropTypeFilter(false);
+    //     setDataTypeVal(type);
+    //     setInputVal("");
+    // };
 
     const updateInputVal = (val) => {
         setInputVal(val);
@@ -84,9 +115,9 @@ export default function Filters() {
                 let options = {
                     method: "get",
                     params: {
-                        unit: dataQueryVal,
+                        unit: filterVal.queryUnit,
                         val: inputVal,
-                        type: filterTypeVal.toLowerCase(),
+                        type: filterVal.typeVal.toLowerCase(),
                     },
                     url: "http://localhost:3001/filterBooks",
                 };
@@ -116,14 +147,18 @@ export default function Filters() {
     return (
         <div className="filter-book">
             <div className="input-box">
-                <div className={dropTypeFilter ? `dropdown-type drop-section show-drop` : `dropdown-type drop-section`}>
-                    <p className="filter-text" onClick={() => updateTypeClickVal()}>
-                        {filterTypeVal}
+                <div
+                    className={
+                        filterVal.typeDrop ? `dropdown-type drop-section show-drop` : `dropdown-type drop-section`
+                    }
+                >
+                    <p className="filter-text" onClick={() => handleDropDown("typeDrop")}>
+                        {filterVal.typeVal}
                     </p>
                     <div className="drop-content">
                         {Object.entries(typeObj).map((item, index) => {
                             return (
-                                <p key={index} onClick={() => updateTypeVal(item[0])}>
+                                <p key={index} onClick={() => handleFilterVal(item[0])}>
                                     {item[1]}
                                 </p>
                             );
@@ -132,16 +167,16 @@ export default function Filters() {
                 </div>
                 <div
                     className={
-                        dropQueryFilter ? `dropdown-filter drop-section show-drop` : `dropdown-filter drop-section`
+                        filterVal.queryDrop ? `dropdown-filter drop-section show-drop` : `dropdown-filter drop-section`
                     }
                 >
-                    <p className="filter-text" onClick={() => updateQueryClickVal()}>
-                        {filterQueryVal}
+                    <p className="filter-text" onClick={() => handleDropDown("queryDrop")}>
+                        {filterVal.queryval}
                     </p>
                     <div className="drop-content">
                         {Object.entries(queryObj).map((item, index) => {
                             return (
-                                <p key={index} onClick={() => updateQueryVal(item[0])}>
+                                <p key={index} onClick={() => handleFilterVal(item[0])}>
                                     {item[1]}
                                 </p>
                             );
