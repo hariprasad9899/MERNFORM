@@ -17,7 +17,7 @@ export default function Collections() {
 
     useEffect(() => {
         if (newbookadded) {
-            Axios.get("/getBooks").then((res) => {
+            Axios.get("https://librarydata.onrender.com/getBooks").then((res) => {
                 dispatch(addbook([...res.data]));
             });
         }

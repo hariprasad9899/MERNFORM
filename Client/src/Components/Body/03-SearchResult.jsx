@@ -24,7 +24,7 @@ export default function SearchResult() {
         params: {
             ...searchquery,
         },
-        url: "/findBooks",
+        url: "https://librarydata.onrender.com/findBooks",
     };
 
     useEffect(() => {

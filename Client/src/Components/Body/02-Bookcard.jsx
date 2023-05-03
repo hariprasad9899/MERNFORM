@@ -26,7 +26,7 @@ export default function Bookcard({ data }) {
             params: {
                 id: deleteId,
             },
-            url: `http://localhost:3001/deleteBook/`,
+            url: `https://librarydata.onrender.com/deleteBook/`,
         };
 
         Axios.request(options).then((res) => {

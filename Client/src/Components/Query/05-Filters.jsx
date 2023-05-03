@@ -74,7 +74,7 @@ export default function Filters() {
                         val: inputVal,
                         type: filterVal.typeVal.toLowerCase(),
                     },
-                    url: "/filterBooks",
+                    url: "https://librarydata.onrender.com/filterBooks",
                 };
 
                 Axios.request(options).then((res) => {
@@ -95,7 +95,7 @@ export default function Filters() {
 
     useEffect(() => {
         if (bookFilter.reset) {
-            Axios.get("/getBooks").then((res) => {
+            Axios.get("https://librarydata.onrender.com/getBooks").then((res) => {
                 dispatch(addbook([...res.data]));
                 setBookFilter((t) => {
                     return { ...t, reset: false };

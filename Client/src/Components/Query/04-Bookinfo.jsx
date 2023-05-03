@@ -33,7 +33,7 @@ export default function Bookinfo({ setShowModel }) {
     };
 
     const addBooktoServer = () => {
-        Axios.post("/addBook", { ...bookInfo }).then((res) => {
+        Axios.post("https://librarydata.onrender.com/addBook", { ...bookInfo }).then((res) => {
             dispatch(updatebook());
             alert("Book added");
             setShowModel(false);
